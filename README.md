@@ -4,6 +4,33 @@ Compare **OpenAI Whisper** (batch) vs **Deepgram** (streaming) for dictation-sty
 
 Built for engineers evaluating which STT provider feels best for real-time dictation.
 
+## Sample output
+
+Noisy clip `1089-134686-0000_noisy` — run `stt-bench compare` or `stt-bench listen`:
+
+```
+                 Whisper vs Deepgram
+┏━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metric   ┃ Whisper (batch) ┃ Deepgram (streaming) ┃
+┡━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━┩
+│ WER      │ 0.0%            │ 0.0%                 │
+│ chrF     │ 12.6            │ 25.3                 │
+│ Punct F1 │ 0.0%            │ 0.0%                 │
+│ TTFT     │ —               │ 2395ms               │
+│ Total    │ 3520ms          │ 10001ms              │
+│ RTF      │ 0.34            │ 0.96                 │
+│ Cost     │ $0.0010         │ $0.0007              │
+│ Vibe     │ 73.09           │ 60.08                │
+└──────────┴─────────────────┴──────────────────────┘
+```
+
+| | Whisper | Deepgram |
+|---|---------|----------|
+| **Transcript** | He hoped there would be stew for dinner, turnips and carrots and bruised potatoes and fat mutton pieces to be ladled out in thick, peppered, flour-fattened sauce. | He hoped there would be stew for dinner, turnips and carrots and bruised potatoes and fat mutton pieces to be ladled out. In thick, peppered, flour fattened sauce. |
+| **Takeaway** | Higher vibe — better accuracy/formatting, faster total time | Lower TTFT trade-off on streaming; cheaper per minute |
+
+> WER ties on normalized words; **vibe score** breaks the tie using latency + cost. Whisper wins this clip for dictation UX overall.
+
 ## Quick start (2 minutes)
 
 ```bash
