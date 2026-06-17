@@ -1,0 +1,12 @@
+# Provider pricing assumptions (USD per minute of audio)
+# Update when vendor pricing changes.
+
+whisper:
+  whisper-1: 0.006
+
+deepgram:
+  nova-2: 0.0043
+  nova-3: 0.0048
+
+mock:
+  default: 0.0

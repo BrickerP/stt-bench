@@ -1,0 +1,352 @@
+{
+  "dataset_id": "default",
+  "name": "LibriSpeech test-clean subset + synthetic noisy",
+  "description": "30 clean utterances from LibriSpeech test-clean (OpenSLR 12) plus one pink-noise overlay clip.",
+  "license": "CC BY 4.0 (LibriSpeech)",
+  "source_url": "https://www.openslr.org/12/",
+  "samples": [
+    {
+      "id": "1089-134686-0000",
+      "audio_path": "librispeech/1089-134686-0000.flac",
+      "reference_text": "HE HOPED THERE WOULD BE STEW FOR DINNER TURNIPS AND CARROTS AND BRUISED POTATOES AND FAT MUTTON PIECES TO BE LADLED OUT IN THICK PEPPERED FLOUR FATTENED SAUCE",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1089",
+        "chapter": "134686"
+      }
+    },
+    {
+      "id": "1089-134686-0001",
+      "audio_path": "librispeech/1089-134686-0001.flac",
+      "reference_text": "STUFF IT INTO YOU HIS BELLY COUNSELLED HIM",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1089",
+        "chapter": "134686"
+      }
+    },
+    {
+      "id": "1089-134686-0002",
+      "audio_path": "librispeech/1089-134686-0002.flac",
+      "reference_text": "AFTER EARLY NIGHTFALL THE YELLOW LAMPS WOULD LIGHT UP HERE AND THERE THE SQUALID QUARTER OF THE BROTHELS",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1089",
+        "chapter": "134686"
+      }
+    },
+    {
+      "id": "1089-134686-0003",
+      "audio_path": "librispeech/1089-134686-0003.flac",
+      "reference_text": "HELLO BERTIE ANY GOOD IN YOUR MIND",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1089",
+        "chapter": "134686"
+      }
+    },
+    {
+      "id": "1089-134686-0004",
+      "audio_path": "librispeech/1089-134686-0004.flac",
+      "reference_text": "NUMBER TEN FRESH NELLY IS WAITING ON YOU GOOD NIGHT HUSBAND",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1089",
+        "chapter": "134686"
+      }
+    },
+    {
+      "id": "1089-134686-0005",
+      "audio_path": "librispeech/1089-134686-0005.flac",
+      "reference_text": "THE MUSIC CAME NEARER AND HE RECALLED THE WORDS THE WORDS OF SHELLEY'S FRAGMENT UPON THE MOON WANDERING COMPANIONLESS PALE FOR WEARINESS",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1089",
+        "chapter": "134686"
+      }
+    },
+    {
+      "id": "1089-134686-0006",
+      "audio_path": "librispeech/1089-134686-0006.flac",
+      "reference_text": "THE DULL LIGHT FELL MORE FAINTLY UPON THE PAGE WHEREON ANOTHER EQUATION BEGAN TO UNFOLD ITSELF SLOWLY AND TO SPREAD ABROAD ITS WIDENING TAIL",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1089",
+        "chapter": "134686"
+      }
+    },
+    {
+      "id": "1089-134686-0007",
+      "audio_path": "librispeech/1089-134686-0007.flac",
+      "reference_text": "A COLD LUCID INDIFFERENCE REIGNED IN HIS SOUL",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1089",
+        "chapter": "134686"
+      }
+    },
+    {
+      "id": "1188-133604-0000",
+      "audio_path": "librispeech/1188-133604-0000.flac",
+      "reference_text": "YOU WILL FIND ME CONTINUALLY SPEAKING OF FOUR MEN TITIAN HOLBEIN TURNER AND TINTORET IN ALMOST THE SAME TERMS",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1188",
+        "chapter": "133604"
+      }
+    },
+    {
+      "id": "1188-133604-0001",
+      "audio_path": "librispeech/1188-133604-0001.flac",
+      "reference_text": "THEY UNITE EVERY QUALITY AND SOMETIMES YOU WILL FIND ME REFERRING TO THEM AS COLORISTS SOMETIMES AS CHIAROSCURISTS",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1188",
+        "chapter": "133604"
+      }
+    },
+    {
+      "id": "1188-133604-0002",
+      "audio_path": "librispeech/1188-133604-0002.flac",
+      "reference_text": "BY BEING STUDIOUS OF COLOR THEY ARE STUDIOUS OF DIVISION AND WHILE THE CHIAROSCURIST DEVOTES HIMSELF TO THE REPRESENTATION OF DEGREES OF FORCE IN ONE THING UNSEPARATED LIGHT THE COLORISTS HAVE FOR THEIR FUNCTION THE ATTAINMENT OF BEAUTY BY ARRANGEMENT OF THE DIVISIONS OF LIGHT",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1188",
+        "chapter": "133604"
+      }
+    },
+    {
+      "id": "1188-133604-0003",
+      "audio_path": "librispeech/1188-133604-0003.flac",
+      "reference_text": "MY FIRST AND PRINCIPAL REASON WAS THAT THEY ENFORCED BEYOND ALL RESISTANCE ON ANY STUDENT WHO MIGHT ATTEMPT TO COPY THEM THIS METHOD OF LAYING PORTIONS OF DISTINCT HUE SIDE BY SIDE",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1188",
+        "chapter": "133604"
+      }
+    },
+    {
+      "id": "1188-133604-0004",
+      "audio_path": "librispeech/1188-133604-0004.flac",
+      "reference_text": "SOME OF THE TOUCHES INDEED WHEN THE TINT HAS BEEN MIXED WITH MUCH WATER HAVE BEEN LAID IN LITTLE DROPS OR PONDS SO THAT THE PIGMENT MIGHT CRYSTALLIZE HARD AT THE EDGE",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1188",
+        "chapter": "133604"
+      }
+    },
+    {
+      "id": "1188-133604-0005",
+      "audio_path": "librispeech/1188-133604-0005.flac",
+      "reference_text": "IT IS THE HEAD OF A PARROT WITH A LITTLE FLOWER IN HIS BEAK FROM A PICTURE OF CARPACCIO'S ONE OF HIS SERIES OF THE LIFE OF SAINT GEORGE",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1188",
+        "chapter": "133604"
+      }
+    },
+    {
+      "id": "1188-133604-0006",
+      "audio_path": "librispeech/1188-133604-0006.flac",
+      "reference_text": "THEN HE COMES TO THE BEAK OF IT",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1188",
+        "chapter": "133604"
+      }
+    },
+    {
+      "id": "1188-133604-0007",
+      "audio_path": "librispeech/1188-133604-0007.flac",
+      "reference_text": "THE BROWN GROUND BENEATH IS LEFT FOR THE MOST PART ONE TOUCH OF BLACK IS PUT FOR THE HOLLOW TWO DELICATE LINES OF DARK GRAY DEFINE THE OUTER CURVE AND ONE LITTLE QUIVERING TOUCH OF WHITE DRAWS THE INNER EDGE OF THE MANDIBLE",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1188",
+        "chapter": "133604"
+      }
+    },
+    {
+      "id": "121-123852-0000",
+      "audio_path": "librispeech/121-123852-0000.flac",
+      "reference_text": "THOSE PRETTY WRONGS THAT LIBERTY COMMITS WHEN I AM SOMETIME ABSENT FROM THY HEART THY BEAUTY AND THY YEARS FULL WELL BEFITS FOR STILL TEMPTATION FOLLOWS WHERE THOU ART",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "121",
+        "chapter": "123852"
+      }
+    },
+    {
+      "id": "121-123852-0001",
+      "audio_path": "librispeech/121-123852-0001.flac",
+      "reference_text": "AY ME",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "121",
+        "chapter": "123852"
+      }
+    },
+    {
+      "id": "121-123852-0002",
+      "audio_path": "librispeech/121-123852-0002.flac",
+      "reference_text": "NO MATTER THEN ALTHOUGH MY FOOT DID STAND UPON THE FARTHEST EARTH REMOV'D FROM THEE FOR NIMBLE THOUGHT CAN JUMP BOTH SEA AND LAND AS SOON AS THINK THE PLACE WHERE HE WOULD BE BUT AH",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "121",
+        "chapter": "123852"
+      }
+    },
+    {
+      "id": "121-123852-0003",
+      "audio_path": "librispeech/121-123852-0003.flac",
+      "reference_text": "THOUGHT KILLS ME THAT I AM NOT THOUGHT TO LEAP LARGE LENGTHS OF MILES WHEN THOU ART GONE BUT THAT SO MUCH OF EARTH AND WATER WROUGHT I MUST ATTEND TIME'S LEISURE WITH MY MOAN RECEIVING NOUGHT BY ELEMENTS SO SLOW BUT HEAVY TEARS BADGES OF EITHER'S WOE",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "121",
+        "chapter": "123852"
+      }
+    },
+    {
+      "id": "121-123852-0004",
+      "audio_path": "librispeech/121-123852-0004.flac",
+      "reference_text": "MY HEART DOTH PLEAD THAT THOU IN HIM DOST LIE A CLOSET NEVER PIERC'D WITH CRYSTAL EYES BUT THE DEFENDANT DOTH THAT PLEA DENY AND SAYS IN HIM THY FAIR APPEARANCE LIES",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "121",
+        "chapter": "123852"
+      }
+    },
+    {
+      "id": "1221-135766-0000",
+      "audio_path": "librispeech/1221-135766-0000.flac",
+      "reference_text": "HOW STRANGE IT SEEMED TO THE SAD WOMAN AS SHE WATCHED THE GROWTH AND THE BEAUTY THAT BECAME EVERY DAY MORE BRILLIANT AND THE INTELLIGENCE THAT THREW ITS QUIVERING SUNSHINE OVER THE TINY FEATURES OF THIS CHILD",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1221",
+        "chapter": "135766"
+      }
+    },
+    {
+      "id": "1221-135766-0001",
+      "audio_path": "librispeech/1221-135766-0001.flac",
+      "reference_text": "GOD AS A DIRECT CONSEQUENCE OF THE SIN WHICH MAN THUS PUNISHED HAD GIVEN HER A LOVELY CHILD WHOSE PLACE WAS ON THAT SAME DISHONOURED BOSOM TO CONNECT HER PARENT FOR EVER WITH THE RACE AND DESCENT OF MORTALS AND TO BE FINALLY A BLESSED SOUL IN HEAVEN",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1221",
+        "chapter": "135766"
+      }
+    },
+    {
+      "id": "1221-135766-0002",
+      "audio_path": "librispeech/1221-135766-0002.flac",
+      "reference_text": "YET THESE THOUGHTS AFFECTED HESTER PRYNNE LESS WITH HOPE THAN APPREHENSION",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1221",
+        "chapter": "135766"
+      }
+    },
+    {
+      "id": "1221-135766-0003",
+      "audio_path": "librispeech/1221-135766-0003.flac",
+      "reference_text": "THE CHILD HAD A NATIVE GRACE WHICH DOES NOT INVARIABLY CO EXIST WITH FAULTLESS BEAUTY ITS ATTIRE HOWEVER SIMPLE ALWAYS IMPRESSED THE BEHOLDER AS IF IT WERE THE VERY GARB THAT PRECISELY BECAME IT BEST",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1221",
+        "chapter": "135766"
+      }
+    },
+    {
+      "id": "1221-135766-0004",
+      "audio_path": "librispeech/1221-135766-0004.flac",
+      "reference_text": "THIS OUTWARD MUTABILITY INDICATED AND DID NOT MORE THAN FAIRLY EXPRESS THE VARIOUS PROPERTIES OF HER INNER LIFE",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1221",
+        "chapter": "135766"
+      }
+    },
+    {
+      "id": "1221-135766-0005",
+      "audio_path": "librispeech/1221-135766-0005.flac",
+      "reference_text": "HESTER COULD ONLY ACCOUNT FOR THE CHILD'S CHARACTER AND EVEN THEN MOST VAGUELY AND IMPERFECTLY BY RECALLING WHAT SHE HERSELF HAD BEEN DURING THAT MOMENTOUS PERIOD WHILE PEARL WAS IMBIBING HER SOUL FROM THE SPIRITUAL WORLD AND HER BODILY FRAME FROM ITS MATERIAL OF EARTH",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1221",
+        "chapter": "135766"
+      }
+    },
+    {
+      "id": "1221-135766-0006",
+      "audio_path": "librispeech/1221-135766-0006.flac",
+      "reference_text": "THEY WERE NOW ILLUMINATED BY THE MORNING RADIANCE OF A YOUNG CHILD'S DISPOSITION BUT LATER IN THE DAY OF EARTHLY EXISTENCE MIGHT BE PROLIFIC OF THE STORM AND WHIRLWIND",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1221",
+        "chapter": "135766"
+      }
+    },
+    {
+      "id": "1221-135766-0007",
+      "audio_path": "librispeech/1221-135766-0007.flac",
+      "reference_text": "HESTER PRYNNE NEVERTHELESS THE LOVING MOTHER OF THIS ONE CHILD RAN LITTLE RISK OF ERRING ON THE SIDE OF UNDUE SEVERITY",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1221",
+        "chapter": "135766"
+      }
+    },
+    {
+      "id": "1221-135766-0008",
+      "audio_path": "librispeech/1221-135766-0008.flac",
+      "reference_text": "MINDFUL HOWEVER OF HER OWN ERRORS AND MISFORTUNES SHE EARLY SOUGHT TO IMPOSE A TENDER BUT STRICT CONTROL OVER THE INFANT IMMORTALITY THAT WAS COMMITTED TO HER CHARGE",
+      "condition": "clean",
+      "source": "librispeech",
+      "metadata": {
+        "speaker": "1221",
+        "chapter": "135766"
+      }
+    },
+    {
+      "id": "1089-134686-0000_noisy",
+      "audio_path": "noisy/1089-134686-0000_noisy.flac",
+      "reference_text": "HE HOPED THERE WOULD BE STEW FOR DINNER TURNIPS AND CARROTS AND BRUISED POTATOES AND FAT MUTTON PIECES TO BE LADLED OUT IN THICK PEPPERED FLOUR FATTENED SAUCE",
+      "condition": "noisy",
+      "source": "synthetic",
+      "metadata": {
+        "derived_from": "1089-134686-0000",
+        "noise_type": "pink",
+        "snr_db_approx": 10,
+        "method": "ffmpeg anoisesrc + amix"
+      }
+    }
+  ]
+}

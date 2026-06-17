@@ -1,0 +1,6 @@
+# Default composite vibe score weights (must sum to 1.0)
+wer: 0.35
+ttft: 0.25
+rtf: 0.15
+cost: 0.15
+confidence: 0.10

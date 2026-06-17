@@ -1,0 +1,27 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# SQLite run history (local)
+data/results.db
+data/results.db-*
+*.db-shm
+*.db-wal
+
+# Large transient downloads (subset audio in librispeech/ is committed)
+data/cache/*
+!data/cache/.gitkeep
+data/archives/
+*.tar.gz
+
+# IDE
+.idea/
+.vscode/
