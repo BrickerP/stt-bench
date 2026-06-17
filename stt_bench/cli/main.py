@@ -11,7 +11,10 @@ from typing import Annotated, Optional
 import httpx
 import typer
 from rich.console import Console
+from rich.panel import Panel
 from rich.table import Table
+from rich.text import Text
+from rich.tree import Tree
 
 from stt_bench.models.config import ProviderConfig
 from stt_bench.settings import get_settings
@@ -73,6 +76,57 @@ def math_cmd():
     from stt_bench.math_doc import print_math_doc
 
     print_math_doc(console)
+
+
+@app.command("tree")
+def tree_cmd():
+    """Print CLI command tree (screenshot-friendly)."""
+    header = Text()
+    header.append("STT Bench", style="bold cyan")
+    header.append("  ·  Whisper vs Deepgram", style="dim")
+    console.print()
+    console.print(Panel(header, subtitle="github.com/BrickerP/stt-bench", border_style="cyan"))
+
+    root = Tree("[bold white]stt-bench[/bold white]")
+
+    demo = root.add("[bold yellow]★ Demo[/bold yellow]")
+    demo.add("[cyan]listen[/cyan] [1089-134686-0000_noisy]     play audio + compare")
+    demo.add("[cyan]compare[/cyan] SAMPLE_ID · --all          side-by-side metrics")
+    demo.add("[cyan]math[/cyan]                              metric formulas")
+
+    root.add("[cyan]samples[/cyan] [--condition clean|noisy]")
+    root.add("[cyan]serve[/cyan] [--port 8766] [--reload]")
+
+    transcribe = root.add("[cyan]transcribe[/cyan]")
+    transcribe.add("file PATH [--provider] [--stream] [--force]")
+
+    benchmark = root.add("[cyan]benchmark[/cyan]")
+    benchmark.add("run [--providers whisper,deepgram] [--verbose]")
+    benchmark.add("list [--limit]")
+    benchmark.add("status RUN_ID")
+
+    dataset = root.add("[cyan]dataset[/cyan]")
+    dataset.add("list · show · validate · stats")
+
+    results = root.add("[cyan]results[/cyan]")
+    results.add("leaderboard [--exclude-mock]")
+    results.add("show RUN_ID")
+    results.add("list · export · import")
+
+    provider = root.add("[cyan]provider[/cyan]")
+    provider.add("list · validate · test")
+
+    console.print(root)
+    console.print()
+
+    tips = Table(show_header=False, box=None, padding=(0, 2))
+    tips.add_column(style="dim")
+    tips.add_column()
+    tips.add_row("🎧", "stt-bench listen")
+    tips.add_row("📊", "stt-bench compare --math")
+    tips.add_row("🏆", "stt-bench results leaderboard --exclude-mock")
+    console.print(Panel(tips, title="Quick demo", border_style="green"))
+    console.print()
 
 
 # --- compare / listen / samples (easy testing) ---
