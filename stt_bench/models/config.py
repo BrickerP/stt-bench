@@ -19,7 +19,7 @@ class ProviderCapabilities(BaseModel):
 
 
 class ProviderConfig(BaseModel):
-    provider: Literal["whisper", "deepgram", "mock"]
+    provider: Literal["whisper", "deepgram", "mock", "assemblyai"]
     model: str
     language: str = "en"
     transport_mode: Literal["batch", "streaming"] = "batch"

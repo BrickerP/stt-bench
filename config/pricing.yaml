@@ -8,5 +8,10 @@ deepgram:
   nova-2: 0.0043
   nova-3: 0.0048
 
+assemblyai:
+  best: 0.00025
+  nano: 0.0002
+  default: 0.00025
+
 mock:
   default: 0.0

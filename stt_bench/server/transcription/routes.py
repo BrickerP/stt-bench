@@ -1,7 +1,6 @@
 """Transcription REST routes."""
 
 import json
-from pathlib import Path
 
 from fastapi import APIRouter, Depends, File, Form, Request, UploadFile
 from pydantic import BaseModel

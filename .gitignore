@@ -25,3 +25,6 @@ data/archives/
 # IDE
 .idea/
 .vscode/
+
+# Local agent / ultragoal state
+.omx/

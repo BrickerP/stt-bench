@@ -194,27 +194,25 @@ def register_provider(cls: type[STTProvider]) -> type[STTProvider]:
     return cls
 
 
+def _ensure_providers_registered() -> None:
+    if len(_REGISTRY) >= 4:
+        return
+    from stt_bench.providers.assemblyai import AssemblyAIProvider
+    from stt_bench.providers.deepgram import DeepgramProvider
+    from stt_bench.providers.mock import MockProvider
+    from stt_bench.providers.whisper import WhisperProvider
+
+    for cls in (MockProvider, WhisperProvider, DeepgramProvider, AssemblyAIProvider):
+        register_provider(cls)
+
+
 def get_provider(name: str, settings: Settings) -> STTProvider:
-    # Ensure registry is populated
-    if not _REGISTRY:
-        from stt_bench.providers.deepgram import DeepgramProvider
-        from stt_bench.providers.mock import MockProvider
-        from stt_bench.providers.whisper import WhisperProvider
-
-        for cls in (MockProvider, WhisperProvider, DeepgramProvider):
-            register_provider(cls)
-
+    _ensure_providers_registered()
     if name not in _REGISTRY:
         raise ProviderError("PROVIDER_NOT_FOUND", f"Unknown provider: {name}", 404)
     return _REGISTRY[name](settings)
 
 
 def list_providers(settings: Settings) -> list[STTProvider]:
-    from stt_bench.providers.deepgram import DeepgramProvider
-    from stt_bench.providers.mock import MockProvider
-    from stt_bench.providers.whisper import WhisperProvider
-
-    for cls in (MockProvider, WhisperProvider, DeepgramProvider):
-        register_provider(cls)
-
+    _ensure_providers_registered()
     return [cls(settings) for cls in _REGISTRY.values()]

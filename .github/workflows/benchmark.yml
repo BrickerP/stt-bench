@@ -1,0 +1,26 @@
+name: PR mock benchmark
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mock-bench:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Mock benchmark + report
+        run: |
+          stt-bench benchmark run --provider mock --force
+          stt-bench report --format markdown --out report.md
+          head -n 80 report.md

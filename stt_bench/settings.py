@@ -16,6 +16,7 @@ class Settings(BaseSettings):
 
     openai_api_key: str | None = None
     deepgram_api_key: str | None = None
+    assemblyai_api_key: str | None = None
 
     stt_bench_host: str = "127.0.0.1"
     stt_bench_port: int = 8766
@@ -28,6 +29,7 @@ class Settings(BaseSettings):
     deepgram_rpm: int = 100
     whisper_model: str = "whisper-1"
     deepgram_model: str = "nova-2"
+    assemblyai_model: str = "best"
     stt_bench_log_level: str = "INFO"
     stt_bench_max_concurrent_samples: int = 4
 

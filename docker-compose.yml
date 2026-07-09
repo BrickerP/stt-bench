@@ -1,0 +1,21 @@
+services:
+  stt-bench:
+    build: .
+    ports:
+      - "8766:8766"
+    environment:
+      STT_BENCH_HOST: "0.0.0.0"
+      STT_BENCH_PORT: "8766"
+      STT_BENCH_DB_PATH: "/data/results.db"
+      STT_BENCH_CACHE_DIR: "/data/cache"
+      STT_BENCH_DATA_DIR: "/app/data"
+      STT_BENCH_CONFIG_DIR: "/app/config"
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      DEEPGRAM_API_KEY: "${DEEPGRAM_API_KEY:-}"
+      ASSEMBLYAI_API_KEY: "${ASSEMBLYAI_API_KEY:-}"
+    volumes:
+      - stt_bench_data:/data
+    # Local service only — no auth platform, no cloud queue.
+
+volumes:
+  stt_bench_data:

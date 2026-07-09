@@ -47,7 +47,6 @@ class DeepgramProvider(STTProvider):
         audio: bytes,
         config: ProviderConfig,
     ):
-        from stt_bench.models.transcription import TranscriptionResult
 
         raise TransportNotSupported("deepgram", "batch")
 

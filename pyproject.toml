@@ -3,11 +3,15 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "stt-bench"
+name = "stt-eval-bench"
 version = "0.1.0"
-description = "Local STT benchmarking: Whisper (batch) vs Deepgram (streaming)"
+description = "Self-hostable STT evaluation toolkit: compare providers on WER, latency, cost, and streaming UX"
 readme = "README.md"
 requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "BrickerP" }]
+keywords = ["speech-to-text", "benchmark", "stt", "evaluation", "whisper", "deepgram"]
+urls = { Homepage = "https://github.com/BrickerP/stt-bench", Repository = "https://github.com/BrickerP/stt-bench" }
 dependencies = [
     "fastapi>=0.115.0",
     "uvicorn[standard]>=0.32.0",

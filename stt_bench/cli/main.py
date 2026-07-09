@@ -23,7 +23,7 @@ console = Console()
 err_console = Console(stderr=True)
 app = typer.Typer(
     name="stt-bench",
-    help="Benchmark Whisper (batch) vs Deepgram (streaming) for dictation.",
+    help="Self-hostable STT evaluation toolkit — compare providers on quality, latency, cost, UX.",
     no_args_is_help=True,
 )
 
@@ -83,7 +83,7 @@ def tree_cmd():
     """Print CLI command tree (screenshot-friendly)."""
     header = Text()
     header.append("STT Bench", style="bold cyan")
-    header.append("  ·  Whisper vs Deepgram", style="dim")
+    header.append("  ·  STT evaluation toolkit", style="dim")
     console.print()
     console.print(Panel(header, subtitle="github.com/BrickerP/stt-bench", border_style="cyan"))
 
@@ -112,6 +112,8 @@ def tree_cmd():
     results.add("leaderboard [--exclude-mock]")
     results.add("show RUN_ID")
     results.add("list · export · import")
+
+    root.add("[cyan]report[/cyan] [--format markdown|json] [--out PATH]")
 
     provider = root.add("[cyan]provider[/cyan]")
     provider.add("list · validate · test")
@@ -530,6 +532,8 @@ def _default_model(provider: str, settings) -> str:
         return settings.whisper_model
     if provider == "deepgram":
         return settings.deepgram_model
+    if provider == "assemblyai":
+        return settings.assemblyai_model
     return "mock-v1"
 
 
@@ -557,6 +561,9 @@ def _validate_provider_credentials(providers: list[str], settings) -> None:
         elif prov == "deepgram":
             key = settings.deepgram_api_key
             env_name = "DEEPGRAM_API_KEY"
+        elif prov == "assemblyai":
+            key = settings.assemblyai_api_key
+            env_name = "ASSEMBLYAI_API_KEY"
         else:
             continue
 
@@ -856,7 +863,7 @@ def dataset_validate(dataset_id: str = typer.Option("default", "--dataset")):
     if result["valid"]:
         console.print(f"[green]✓[/green] Dataset '{result['dataset_id']}' valid ({result['sample_count']} samples)")
     else:
-        console.print(f"[red]✗[/red] Validation failed:")
+        console.print("[red]✗[/red] Validation failed:")
         for err in result["errors"]:
             console.print(f"  - {err}")
         raise typer.Exit(1)
@@ -993,6 +1000,47 @@ def results_import(path: Path = typer.Argument(...)):
             resp = client.post("/api/v1/results/import", files={"file": f})
         resp.raise_for_status()
         console.print("Import complete")
+
+
+@app.command("report")
+def report_cmd(
+    format: str = typer.Option("markdown", "--format", help="markdown|json"),
+    out: Optional[Path] = typer.Option(None, "--out", help="Write report to file"),
+    limit: int = typer.Option(20, "--limit"),
+    dataset: str = typer.Option("default", "--dataset"),
+    exclude_mock: bool = typer.Option(False, "--exclude-mock"),
+):
+    """Generate a PR-pasteable benchmark report from local run history."""
+    settings = get_settings()
+
+    async def _load():
+        from stt_bench.server.results.store import ResultsStore
+
+        store = ResultsStore(settings.db_path)
+        await store.init()
+        runs = await store.list_runs(limit=limit)
+        payload = []
+        for run in runs:
+            if exclude_mock and run.config.provider == "mock":
+                continue
+            if dataset and run.config.dataset_id != dataset:
+                continue
+            payload.append(run.model_dump(mode="json"))
+        return payload
+
+    runs = asyncio.run(_load())
+    if format == "json":
+        text = json.dumps({"runs": runs}, indent=2, default=str)
+    else:
+        from stt_bench.report import render_markdown_report
+
+        text = render_markdown_report(runs)
+
+    if out:
+        out.write_text(text)
+        console.print(f"Wrote {out}")
+    else:
+        console.print(text)
 
 
 # --- provider ---

@@ -1,7 +1,6 @@
 """Results and leaderboard routes."""
 
 import json
-from pathlib import Path
 
 from fastapi import APIRouter, Request, UploadFile
 
@@ -45,7 +44,6 @@ async def import_run(file: UploadFile, request: Request):
 @router.post("/metrics/compute")
 async def compute_metrics(body: dict):
     from stt_bench.metrics.compute import compute_sample_metrics
-    from stt_bench.metrics.latency import compute_rtf
 
     timings = body.get("timings", {})
     sm = compute_sample_metrics(
@@ -117,11 +115,10 @@ async def get_dataset(dataset_id: str, request: Request):
 
     settings = request.app.state.settings
     try:
-        manifest = load_manifest(settings, dataset_id)
+        load_manifest(settings, dataset_id)
     except (FileNotFoundError, ValueError):
         raise APIError("DATASET_NOT_FOUND", f"Dataset '{dataset_id}' not found", 404)
-    stats = get_dataset_stats(settings, dataset_id)
-    return stats
+    return get_dataset_stats(settings, dataset_id)
 
 
 @router.get("/datasets/{dataset_id}/samples")
