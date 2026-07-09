@@ -63,13 +63,14 @@ Execution gate only. Architecture/API details live in [DESIGN.md](../DESIGN.md),
 
 ## 4. Hard DoD Checklist
 
-- [x] `pip install stt-eval-bench` path documented (publish via Trusted Publishing / Release wheels)
-- [x] `docker compose up` → mock benchmark
+- [x] Install path works today via source / GitHub Release wheel (`stt_eval_bench-0.1.0`)
+- [ ] `pip install stt-eval-bench` from PyPI (blocked until Trusted Publisher configured on pypi.org — see Weekly Log)
+- [x] `Dockerfile` + `docker-compose.yml` landed; local `stt-bench serve` mock path verified (`/healthz`, report). Compose not executed on agent host (no docker binary).
 - [x] `stt-bench report --format markdown`
-- [x] CI: pytest, ruff, package build
-- [x] v0.1.0 Release + CHANGELOG
+- [x] CI workflows present: pytest, ruff, package build (mock-only)
+- [x] v0.1.0 GitHub Release + CHANGELOG + wheel/sdist assets
 - [x] CONTRIBUTING / SECURITY / CODEOWNERS / issue templates
-- [x] 5–8 roadmap issues
+- [x] 5–8 roadmap issues (#1–#8)
 - [x] README first screen: STT evaluation toolkit (not Whisper demo)
 
 ## 5. Application Packet
@@ -91,10 +92,10 @@ Form field lengths should be re-checked against the live OpenAI form before subm
 ## 6. Weekly Review Log
 
 ### 2026-07-09
-- Completed Phases 0–4 implementation in one push cycle.
-- PyPI: `stt-bench` taken → ship as `stt-eval-bench`.
-- Local verify: pytest 27 passed, ruff clean, `python -m build` → `stt_eval_bench-0.1.0`, mock benchmark + markdown report OK, `/healthz` via `stt-bench serve`.
-- Docker: `Dockerfile` + `docker-compose.yml` landed; this agent host had no `docker` binary — compose not executed here; CI/users can build.
+- Completed Phases 0–4 implementation; pushed `main` + tag `v0.1.0` + GitHub Release with wheel/sdist.
+- PyPI: name `stt-bench` taken by unrelated 0.2.0 → package **`stt-eval-bench`**. CLI remains `stt-bench`.
+- Local verify: pytest 27 passed, ruff clean, build OK, mock benchmark + markdown report OK, `/healthz`/`/readyz`/`/version` via `stt-bench serve`.
+- Docker files landed; compose not run here (no docker binary on agent host).
 - Roadmap issues #1–#8 opened.
+- **Blocker (honest):** PyPI Trusted Publisher not yet configured on pypi.org, so `pip install stt-eval-bench` is not live. README primary install is source / Release wheel. `release.yml` publish job fails visibly until publisher is added (environment `release`).
 - Still early-stage usage; application narrative stays honest.
-- Next: configure PyPI Trusted Publisher on pypi.org for this repo’s `release.yml` environment `release`, then tag `v0.1.0`.

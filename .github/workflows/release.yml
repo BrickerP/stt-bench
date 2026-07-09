@@ -52,5 +52,7 @@ jobs:
           name: dist
           path: dist
       - name: Publish to PyPI (Trusted Publishing)
+        # Requires a one-time Trusted Publisher on pypi.org for project
+        # stt-eval-bench → owner BrickerP, workflow release.yml, environment release.
+        # Until configured, this job will fail visibly (no continue-on-error).
         uses: pypa/gh-action-pypi-publish@release/v1
-        continue-on-error: true

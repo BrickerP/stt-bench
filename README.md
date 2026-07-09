@@ -12,9 +12,14 @@ PyPI package name: **`stt-eval-bench`** (the name `stt-bench` was already taken 
 ## Quick start (2 minutes)
 
 ```bash
-pip install stt-eval-bench
-# or from source:
-# pip install -e ".[dev]"
+# From source (recommended until PyPI Trusted Publishing is configured):
+git clone https://github.com/BrickerP/stt-bench.git
+cd stt-bench
+python3 -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"
+
+# Or install the GitHub Release wheel:
+# pip install https://github.com/BrickerP/stt-bench/releases/download/v0.1.0/stt_eval_bench-0.1.0-py3-none-any.whl
 
 stt-bench benchmark run --provider mock --force
 stt-bench report --format markdown
@@ -22,6 +27,8 @@ stt-bench results leaderboard
 ```
 
 No API keys required for mock runs.
+
+PyPI name **`stt-eval-bench`** is reserved for Trusted Publishing (`release.yml` + pypi.org publisher). Until that is configured once on PyPI, use source or the Release wheel above — do not assume `pip install stt-eval-bench` works yet.
 
 ## What you get
 
