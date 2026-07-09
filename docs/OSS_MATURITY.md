@@ -98,4 +98,5 @@ Form field lengths should be re-checked against the live OpenAI form before subm
 - Docker files landed; compose not run here (no docker binary on agent host).
 - Roadmap issues #1–#8 opened.
 - **Blocker cleared:** Pending Trusted Publisher registered for `stt-eval-bench` (`BrickerP/stt-bench` / `release.yml` / env `release`). Publishing via tag `v0.1.1`.
+- **Codex for OSS application submitted** (2026-07-09) via https://openai.com/form/codex-for-oss/ for `BrickerP/stt-bench` as Primary maintainer; confirmation: “Thanks for your submission!”.
 - Still early-stage usage; application narrative stays honest.
