@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.1] — 2026-07-09
+
+### Added
+
+- First PyPI publish of `stt-eval-bench` via Trusted Publishing (pending publisher → live project)
+
+### Notes
+
+- Install: `pip install stt-eval-bench`
+- CLI remains `stt-bench`
+
 ## [0.1.0] — 2026-07-09
 
 ### Added

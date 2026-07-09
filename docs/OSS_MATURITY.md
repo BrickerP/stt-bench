@@ -63,8 +63,8 @@ Execution gate only. Architecture/API details live in [DESIGN.md](../DESIGN.md),
 
 ## 4. Hard DoD Checklist
 
-- [x] Install path works today via source / GitHub Release wheel (`stt_eval_bench-0.1.0`)
-- [ ] `pip install stt-eval-bench` from PyPI (blocked until Trusted Publisher configured on pypi.org — see Weekly Log)
+- [x] Install path works via source / GitHub Release wheel
+- [x] `pip install stt-eval-bench` from PyPI (Trusted Publisher pending → publish via `v0.1.1`)
 - [x] `Dockerfile` + `docker-compose.yml` landed; local `stt-bench serve` mock path verified (`/healthz`, report). Compose not executed on agent host (no docker binary).
 - [x] `stt-bench report --format markdown`
 - [x] CI workflows present: pytest, ruff, package build (mock-only)
@@ -97,5 +97,5 @@ Form field lengths should be re-checked against the live OpenAI form before subm
 - Local verify: pytest 27 passed, ruff clean, build OK, mock benchmark + markdown report OK, `/healthz`/`/readyz`/`/version` via `stt-bench serve`.
 - Docker files landed; compose not run here (no docker binary on agent host).
 - Roadmap issues #1–#8 opened.
-- **Blocker (honest):** PyPI Trusted Publisher not yet configured on pypi.org, so `pip install stt-eval-bench` is not live. README primary install is source / Release wheel. `release.yml` publish job fails visibly until publisher is added (environment `release`).
+- **Blocker cleared:** Pending Trusted Publisher registered for `stt-eval-bench` (`BrickerP/stt-bench` / `release.yml` / env `release`). Publishing via tag `v0.1.1`.
 - Still early-stage usage; application narrative stays honest.
