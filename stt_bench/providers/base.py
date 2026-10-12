@@ -165,25 +165,39 @@ class STTProvider(ABC):
 
 def estimate_audio_duration_s(audio: bytes) -> float:
     """Best-effort audio duration from bytes."""
-    # Try soundfile (handles FLAC, WAV, etc.)
+    duration = _duration_from_soundfile(audio)
+    if duration is None and audio[:4] == b"RIFF":
+        duration = _duration_from_wave(audio)
+    if duration is None:
+        # Fallback: assume ~128kbps compressed audio
+        return max(len(audio) / 16000.0, 0.1)
+    return duration
+
+
+def _duration_from_soundfile(audio: bytes) -> float | None:
     try:
         import soundfile as sf
+    except (ImportError, OSError):
+        return None
+    try:
+        with sf.SoundFile(BytesIO(audio)) as handle:
+            rate = float(handle.samplerate)
+            if rate <= 0:
+                return None
+            return len(handle) / rate
+    except (sf.SoundFileError, OSError, RuntimeError, ValueError, TypeError, EOFError):
+        return None
 
-        with sf.SoundFile(BytesIO(audio)) as f:
-            return len(f) / float(f.samplerate)
-    except Exception:
-        pass
 
-    # Try WAV
-    if audio[:4] == b"RIFF":
-        try:
-            with wave.open(BytesIO(audio), "rb") as wf:
-                return wf.getnframes() / float(wf.getframerate())
-        except Exception:
-            pass
-
-    # Fallback: assume ~128kbps compressed audio
-    return max(len(audio) / 16000.0, 0.1)
+def _duration_from_wave(audio: bytes) -> float | None:
+    try:
+        with wave.open(BytesIO(audio), "rb") as wf:
+            rate = float(wf.getframerate())
+            if rate <= 0:
+                return None
+            return wf.getnframes() / rate
+    except (wave.Error, EOFError, OSError, RuntimeError, ValueError):
+        return None
 
 
 _REGISTRY: dict[str, type[STTProvider]] = {}

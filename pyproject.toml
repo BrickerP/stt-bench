@@ -39,7 +39,9 @@ dev = [
     "pytest>=8.3.0",
     "pytest-asyncio>=0.24.0",
     "pytest-cov>=5.0.0",
-    "ruff>=0.7.0",
+    # Pinned: 0.16.0 (2026-07-23) grew the default rule set from 59 to 413.
+    # An open floor let CI install 0.17.0 and fail lint with no code change.
+    "ruff==0.17.0",
     "mypy>=1.13.0",
 ]
 
@@ -57,3 +59,17 @@ testpaths = ["tests"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+
+[tool.ruff.lint.flake8-bugbear]
+# FastAPI (Depends, File, Form) and Typer (Option, Argument) put a marker
+# call in the signature. It runs once at import and is not a shared mutable
+# default, so B008's suggested rewrite fights the framework API. Immutable
+# annotations are already ignored; this covers the mutable ones (Settings,
+# UploadFile, Path, list).
+extend-immutable-calls = [
+    "fastapi.Depends",
+    "fastapi.File",
+    "fastapi.Form",
+    "typer.Argument",
+    "typer.Option",
+]

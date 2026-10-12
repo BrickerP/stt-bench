@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any
 
 
@@ -13,7 +13,7 @@ def render_markdown_report(
     generated_at: datetime | None = None,
 ) -> str:
     """Render a PR-pasteable markdown summary for completed benchmark runs."""
-    ts = (generated_at or datetime.utcnow()).strftime("%Y-%m-%d %H:%M UTC")
+    ts = (generated_at or datetime.now(UTC)).strftime("%Y-%m-%d %H:%M UTC")
     lines = [
         f"# {title}",
         "",

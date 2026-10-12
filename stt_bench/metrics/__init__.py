@@ -13,8 +13,8 @@ from stt_bench.metrics.wer import (
 __all__ = [
     "aggregate_latencies",
     "compute_chrf",
-    "compute_punctuation_f1",
     "compute_provider_cost",
+    "compute_punctuation_f1",
     "compute_rtf",
     "compute_sample_metrics",
     "compute_wer",

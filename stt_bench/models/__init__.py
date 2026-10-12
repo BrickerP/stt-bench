@@ -6,7 +6,7 @@ from stt_bench.models.benchmark import (
     BenchmarkRunConfig,
     SampleMetrics,
 )
-from stt_bench.models.config import ProviderConfig, ProviderCapabilities, TransportMode
+from stt_bench.models.config import ProviderCapabilities, ProviderConfig, TransportMode
 from stt_bench.models.dataset import DatasetManifest, SampleRecord
 from stt_bench.models.transcription import (
     ConfidenceMetrics,
