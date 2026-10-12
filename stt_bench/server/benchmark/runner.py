@@ -4,18 +4,28 @@ from __future__ import annotations
 
 import asyncio
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 
 from stt_bench.dataset.registry import DatasetRegistry
 from stt_bench.metrics.compute import compute_sample_metrics
 from stt_bench.metrics.latency import aggregate_latencies
-from stt_bench.models.benchmark import AggregateMetrics, BenchmarkRun, BenchmarkRunConfig, SampleMetrics
+from stt_bench.models.benchmark import (
+    AggregateMetrics,
+    BenchmarkRun,
+    BenchmarkRunConfig,
+    SampleMetrics,
+)
 from stt_bench.models.config import ProviderConfig
 from stt_bench.scoring.vibe import compute_vibe_score
 from stt_bench.server.queue import BenchmarkJob, InProcessQueue, ProgressEvent
 from stt_bench.server.results.store import ResultsStore
 from stt_bench.server.transcription.service import TranscriptionService
 from stt_bench.settings import Settings
+
+
+def _naive_utc_now() -> datetime:
+    """UTC clock time with no tzinfo, same value shape as datetime.utcnow()."""
+    return datetime.now(UTC).replace(tzinfo=None)
 
 
 class BenchmarkRunner:
@@ -52,7 +62,7 @@ class BenchmarkRunner:
             id_set = set(sample_ids)
             samples = [s for s in samples if s.id in id_set]
 
-        run_id = f"run_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:6]}"
+        run_id = f"run_{_naive_utc_now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:6]}"
         config = BenchmarkRunConfig(
             dataset_id=dataset_id,
             provider=provider,
@@ -65,7 +75,7 @@ class BenchmarkRunner:
             id=run_id,
             status="queued",
             config=config,
-            created_at=datetime.utcnow(),
+            created_at=_naive_utc_now(),
             sample_count=len(samples),
         )
         await self.store.save_run(run)
@@ -165,7 +175,7 @@ class BenchmarkRunner:
             )
 
             run.status = "completed"
-            run.completed_at = datetime.utcnow()
+            run.completed_at = _naive_utc_now()
             run.aggregate_metrics = agg
             run.vibe_score = vibe.total
             await self.store.save_run(run)
@@ -179,9 +189,9 @@ class BenchmarkRunner:
                     data={"vibe_score": vibe.total, "wer_mean": agg.wer_mean},
                 )
             )
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 — record the failed run and keep the worker alive
             run.status = "failed"
-            run.completed_at = datetime.utcnow()
+            run.completed_at = _naive_utc_now()
             run.error = str(e)
             await self.store.save_run(run)
             await self.queue.emit(

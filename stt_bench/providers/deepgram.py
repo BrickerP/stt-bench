@@ -12,10 +12,10 @@ import websockets
 from stt_bench.metrics.cost import estimate_provider_cost
 from stt_bench.models.config import ProviderCapabilities, ProviderConfig
 from stt_bench.providers.base import (
-    STTProvider,
-    StreamPartial,
-    TransportNotSupported,
     ProviderError,
+    StreamPartial,
+    STTProvider,
+    TransportNotSupported,
     estimate_audio_duration_s,
     register_provider,
 )

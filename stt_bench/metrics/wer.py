@@ -90,7 +90,7 @@ def compute_chrf(reference: str, hypothesis: str) -> float:
         if s <= 1.0:
             s *= 100.0
         return s
-    except Exception:
+    except (ImportError, OSError, TypeError, ValueError):
         return 0.0
 
 

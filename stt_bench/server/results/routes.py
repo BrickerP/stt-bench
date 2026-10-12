@@ -5,8 +5,8 @@ import json
 from fastapi import APIRouter, Request, UploadFile
 
 from stt_bench.models.benchmark import BenchmarkRun
-from stt_bench.server.errors import APIError
 from stt_bench.scoring.vibe import ScoringWeights, load_scoring_weights, save_scoring_weights
+from stt_bench.server.errors import APIError
 
 router = APIRouter(prefix="/api/v1", tags=["results"])
 
@@ -164,11 +164,11 @@ async def list_providers_route(request: Request):
 
 @router.get("/providers/{name}")
 async def get_provider_route(name: str, request: Request):
-    from stt_bench.providers.base import get_provider
+    from stt_bench.providers.base import ProviderError, get_provider
 
     try:
         p = get_provider(name, request.app.state.settings)
-    except Exception:
+    except ProviderError:
         raise APIError("PROVIDER_NOT_FOUND", f"Provider '{name}' not found", 404)
     return {
         "name": p.name,

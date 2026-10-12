@@ -6,7 +6,7 @@ import asyncio
 import json
 import time
 from pathlib import Path
-from typing import Annotated, Optional
+from typing import Annotated
 
 import httpx
 import typer
@@ -138,7 +138,7 @@ DEFAULT_NOISY_SAMPLE = "1089-134686-0000_noisy"
 
 @app.command("samples")
 def samples_list(
-    condition: Optional[str] = typer.Option(None, "--condition", help="Filter: clean or noisy"),
+    condition: str | None = typer.Option(None, "--condition", help="Filter: clean or noisy"),
 ):
     """List available audio samples in the dataset."""
     from stt_bench.dataset.loader import load_manifest, resolve_audio_path
@@ -410,7 +410,7 @@ def transcribe_file(
     path: Path = typer.Argument(..., help="Audio file path"),
     provider: str = typer.Option("mock", "--provider"),
     mode: str = typer.Option("batch", "--mode"),
-    model: Optional[str] = typer.Option(None, "--model"),
+    model: str | None = typer.Option(None, "--model"),
     force: bool = typer.Option(False, "--force"),
     local: bool = typer.Option(True, "--local/--api"),
     stream: bool = typer.Option(False, "--stream"),
@@ -476,21 +476,20 @@ async def _transcribe_local(path: Path, provider: str, config: ProviderConfig, f
 
 
 def _transcribe_stream_api(path: Path, provider: str, config: ProviderConfig):
-    with _api_client() as client:
-        with client.stream(
-            "POST",
-            "/api/v1/transcribe/stream",
-            json={
-                "audio_path": str(path),
-                "provider": provider,
-                "config": config.model_dump(),
-            },
-        ) as resp:
-            resp.raise_for_status()
-            for line in resp.iter_lines():
-                if line.startswith("data:"):
-                    data = json.loads(line[5:].strip())
-                    console.print(data)
+    with _api_client() as client, client.stream(
+        "POST",
+        "/api/v1/transcribe/stream",
+        json={
+            "audio_path": str(path),
+            "provider": provider,
+            "config": config.model_dump(),
+        },
+    ) as resp:
+        resp.raise_for_status()
+        for line in resp.iter_lines():
+            if line.startswith("data:"):
+                data = json.loads(line[5:].strip())
+                console.print(data)
 
 
 def _print_transcription(data: dict):
@@ -589,10 +588,10 @@ app.add_typer(benchmark_app, name="benchmark")
 @benchmark_app.command("run")
 def benchmark_run(
     dataset: str = typer.Option("default", "--dataset"),
-    provider: Optional[str] = typer.Option(None, "--provider"),
-    providers: Optional[list[str]] = typer.Option(None, "--providers"),
-    mode: Optional[str] = typer.Option(None, "--mode"),
-    sample_id: Optional[list[str]] = typer.Option(None, "--sample-id"),
+    provider: str | None = typer.Option(None, "--provider"),
+    providers: list[str] | None = typer.Option(None, "--providers"),
+    mode: str | None = typer.Option(None, "--mode"),
+    sample_id: list[str] | None = typer.Option(None, "--sample-id"),
     force: bool = typer.Option(False, "--force"),
     wait: bool = typer.Option(True, "--wait/--no-wait"),
     local: bool = typer.Option(True, "--local/--api"),
@@ -1005,7 +1004,7 @@ def results_import(path: Path = typer.Argument(...)):
 @app.command("report")
 def report_cmd(
     format: str = typer.Option("markdown", "--format", help="markdown|json"),
-    out: Optional[Path] = typer.Option(None, "--out", help="Write report to file"),
+    out: Path | None = typer.Option(None, "--out", help="Write report to file"),
     limit: int = typer.Option(20, "--limit"),
     dataset: str = typer.Option("default", "--dataset"),
     exclude_mock: bool = typer.Option(False, "--exclude-mock"),

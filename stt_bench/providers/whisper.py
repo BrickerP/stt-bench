@@ -5,6 +5,7 @@ from __future__ import annotations
 import io
 import time
 import uuid
+from collections.abc import AsyncIterator
 
 from openai import AsyncOpenAI
 
@@ -12,13 +13,12 @@ from stt_bench.metrics.cost import estimate_provider_cost
 from stt_bench.models.config import ProviderCapabilities, ProviderConfig
 from stt_bench.models.transcription import Timings, TranscriptionResult
 from stt_bench.providers.base import (
-    STTProvider,
     StreamPartial,
+    STTProvider,
     TransportNotSupported,
     estimate_audio_duration_s,
     register_provider,
 )
-from collections.abc import AsyncIterator
 
 
 @register_provider

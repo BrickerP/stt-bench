@@ -3,14 +3,24 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
 import aiosqlite
 
-from stt_bench.models.benchmark import AggregateMetrics, BenchmarkRun, BenchmarkRunConfig, SampleMetrics
+from stt_bench.models.benchmark import (
+    AggregateMetrics,
+    BenchmarkRun,
+    BenchmarkRunConfig,
+    SampleMetrics,
+)
 from stt_bench.models.transcription import LeaderboardEntry, TranscriptionResult
+
+
+def _naive_utc_now() -> datetime:
+    """UTC clock time with no tzinfo, same value shape as datetime.utcnow()."""
+    return datetime.now(UTC).replace(tzinfo=None)
 
 
 class ResultsStore:
@@ -169,7 +179,7 @@ class ResultsStore:
                     audio_hash,
                     config_hash,
                     result.model_dump_json(),
-                    datetime.utcnow().isoformat(),
+                    _naive_utc_now().isoformat(),
                 ),
             )
             await db.commit()

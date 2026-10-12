@@ -10,7 +10,12 @@ from collections.abc import AsyncIterator
 
 from stt_bench.models.config import ProviderCapabilities, ProviderConfig
 from stt_bench.models.transcription import Timings, TranscriptionResult
-from stt_bench.providers.base import STTProvider, StreamPartial, estimate_audio_duration_s, register_provider
+from stt_bench.providers.base import (
+    StreamPartial,
+    STTProvider,
+    estimate_audio_duration_s,
+    register_provider,
+)
 
 
 @register_provider

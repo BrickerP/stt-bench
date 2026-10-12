@@ -1,6 +1,6 @@
 """Tests for streaming transcript assembly."""
 
-from stt_bench.providers.base import STTProvider, StreamPartial
+from stt_bench.providers.base import StreamPartial, STTProvider
 
 
 class _StubProvider(STTProvider):

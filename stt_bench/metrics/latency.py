@@ -1,7 +1,7 @@
 """Latency metrics."""
 
 import statistics
-from typing import Sequence
+from collections.abc import Sequence
 
 
 def compute_rtf(total_ms: float, audio_duration_s: float) -> float:
