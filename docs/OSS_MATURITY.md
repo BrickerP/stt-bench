@@ -30,6 +30,7 @@ Execution gate only. Architecture/API details live in [DESIGN.md](../DESIGN.md),
 - 2026-10-13: Compose volume and env self-host docs landed ([service.md](./service.md): named volume `stt_bench_data`, env table, key injection). Closes the roadmap item tracked here as issue #1.
 - 2026-10-13: Custom dataset manifest guide landed ([custom-datasets.md](./custom-datasets.md), `examples/custom-dataset/`). Closes the roadmap item tracked here as issue #4.
 - 2026-10-13: Streaming partial revision rate landed (`stt_bench/metrics/revision.py`, mock `interim_script`, report column). Closes the roadmap item tracked here as issue #5.
+- 2026-10-13: PR report comment bot landed (job summary, `report.md` artifact, one sticky comment on same-repo pull requests; fork pull requests skip the comment). Closes the roadmap item tracked here as issue #6.
 
 ## 3. Phases + Exit Criteria
 
@@ -57,6 +58,7 @@ Execution gate only. Architecture/API details live in [DESIGN.md](../DESIGN.md),
 - [x] docs/providers.md
 - [x] New provider adapter + contract/mock tests (no real keys in CI)
 - [x] PR mock-benchmark workflow
+- [x] PR report comment bot (issue #6): job summary, `report.md` artifact, and one sticky comment updated in place
 - Exit: contributor path clear; CI still secret-free
 
 ### Phase 4 — Honest apply packet

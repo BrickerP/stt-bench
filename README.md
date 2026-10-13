@@ -71,6 +71,14 @@ Your own audio and reference transcripts: [docs/custom-datasets.md](docs/custom-
 
 WER · chrF · punctuation F1 · partial revision rate (streaming) · TTFT · RTF · cost · vibe score — see `stt-bench math`.
 
+## CI
+
+Pull requests to `main` run tests (`.github/workflows/ci.yml`) and a mock benchmark (`.github/workflows/benchmark.yml`). No API keys are used.
+
+The mock benchmark writes `report.md` to the job summary and uploads it as the `stt-bench-report` artifact. On a pull request from this repository it also posts or updates one comment, found by the hidden marker `<!-- stt-bench-mock-report -->`. Later pushes update that comment. Fork pull requests skip the comment, because the workflow token is read-only there; the summary and artifact are still published. A read-only token on any pull request (for example Dependabot) is skipped the same way and does not fail the job.
+
+Set the repository variable `STT_BENCH_PR_COMMENT` to `false` to stop comments. A manual run can set `post_pr_comment` to false, or pass `pr_number` to update the comment on that pull request.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/providers.md](docs/providers.md).  

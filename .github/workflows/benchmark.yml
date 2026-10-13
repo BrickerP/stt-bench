@@ -3,13 +3,28 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      post_pr_comment:
+        description: Post or update the sticky benchmark comment (needs pr_number)
+        type: boolean
+        default: true
+      pr_number:
+        description: Pull request number to comment on (workflow_dispatch only)
+        type: string
+        default: ""
 
+# Stay on pull_request. pull_request_target plus a checkout of the PR head
+# would run untrusted fork code with a write token. Fork pull requests keep a
+# read-only token; the job skips the comment instead of failing.
 permissions:
   contents: read
 
 jobs:
   mock-bench:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -24,3 +39,97 @@ jobs:
           stt-bench benchmark run --provider mock --force
           stt-bench report --format markdown --out report.md
           head -n 80 report.md
+      - name: Write job summary
+        run: |
+          {
+            echo "## STT Bench mock report"
+            echo ""
+            cat report.md
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: stt-bench-report
+          path: report.md
+          if-no-files-found: error
+      - name: Prepare sticky comment
+        id: comment
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REPO_VARIABLE: ${{ vars.STT_BENCH_PR_COMMENT }}
+          HEAD_REPO: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || '' }}
+          DISPATCH_POST: ${{ github.event_name == 'workflow_dispatch' && inputs.post_pr_comment && 'true' || 'false' }}
+          PR_NUMBER: ${{ github.event_name == 'pull_request' && github.event.pull_request.number || inputs.pr_number }}
+          REPORT_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: |
+          python -m stt_bench.pr_comment \
+            --report report.md \
+            --sha "$REPORT_SHA" \
+            --run-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            --out pr-comment.json \
+            --event-name "$EVENT_NAME" \
+            --repo-variable "$REPO_VARIABLE" \
+            --head-repo "$HEAD_REPO" \
+            --repository "$GITHUB_REPOSITORY" \
+            --dispatch-post "$DISPATCH_POST" \
+            --pr-number "$PR_NUMBER" \
+            --github-output "$GITHUB_OUTPUT"
+      - name: Note skipped sticky comment
+        if: success() && steps.comment.outputs.post != 'true'
+        env:
+          REASON: ${{ steps.comment.outputs.reason }}
+        run: echo "::notice::${REASON}"
+      - name: Upsert sticky PR comment
+        if: success() && steps.comment.outputs.post == 'true'
+        uses: actions/github-script@v9
+        env:
+          PR_NUMBER: ${{ steps.comment.outputs.pr_number }}
+        with:
+          script: |
+            const fs = require('fs');
+            const payload = JSON.parse(fs.readFileSync('pr-comment.json', 'utf8'));
+            const issueNumber = Number(process.env.PR_NUMBER);
+            if (!Number.isInteger(issueNumber) || issueNumber <= 0) {
+              throw new Error('Sticky comment was requested but PR_NUMBER is missing or invalid.');
+            }
+            const { owner, repo } = context.repo;
+            const marker = payload.marker;
+            try {
+              const comments = await github.paginate(github.rest.issues.listComments, {
+                owner,
+                repo,
+                issue_number: issueNumber,
+                per_page: 100,
+              });
+              const existing = comments
+                .filter((comment) => (comment.body || '').includes(marker))
+                .filter((comment) => comment.user && comment.user.login === 'github-actions[bot]')
+                .sort((a, b) => a.id - b.id)[0];
+              if (existing) {
+                await github.rest.issues.updateComment({
+                  owner,
+                  repo,
+                  comment_id: existing.id,
+                  body: payload.body,
+                });
+                core.notice(`Updated sticky benchmark comment ${existing.id}.`);
+                return;
+              }
+              const created = await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: issueNumber,
+                body: payload.body,
+              });
+              core.notice(`Created sticky benchmark comment ${created.data.id}.`);
+            } catch (error) {
+              const status = error.status || (error.response && error.response.status);
+              if (status === 401 || status === 403) {
+                core.notice(
+                  `Skipping sticky benchmark comment: token cannot write to pull requests (${status}). ` +
+                    'The report is in the job summary and the stt-bench-report artifact.'
+                );
+                return;
+              }
+              throw error;
+            }
