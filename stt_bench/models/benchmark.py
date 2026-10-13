@@ -27,6 +27,12 @@ class SampleMetrics(BaseModel):
     cost_usd: float | None = None
     confidence_mean: float | None = None
     hypothesis: str = ""
+    # None when streaming interims were not captured or no interim update
+    # exists. Zero means interims were captured and none of them rewrote
+    # previously emitted words.
+    partial_revision_rate: float | None = None
+    revised_word_count: int | None = None
+    word_churn: float | None = None
 
 
 class AggregateMetrics(BaseModel):
@@ -42,6 +48,10 @@ class AggregateMetrics(BaseModel):
     cost_total_usd: float
     cost_per_minute_usd: float
     sample_count: int
+    # Mean over samples where the metric applies. None when every sample is
+    # non-streaming or had no interim update — not zero.
+    partial_revision_rate_mean: float | None = None
+    word_churn_mean: float | None = None
 
 
 class BenchmarkRunConfig(BaseModel):

@@ -78,28 +78,49 @@ class MockProvider(STTProvider):
             cache_hit=False,
         )
 
+    def _stream_steps(self, text: str, config: ProviderConfig) -> list[tuple[str, bool]]:
+        """Interim steps plus the final hypothesis.
+
+        ``extra["interim_script"]`` is an optional list of interim strings
+        emitted, in order, before the final transcript. It is deterministic
+        so CI can score partial revision rate without a network provider.
+        Without it, each step appends one word of the final text.
+        """
+        script = config.extra.get("interim_script")
+        if isinstance(script, list):
+            steps = [(str(item), False) for item in script]
+            steps.append((text, True))
+            return steps
+
+        words = text.split()
+        accumulated = ""
+        steps = []
+        for index, word in enumerate(words):
+            accumulated = f"{accumulated} {word}".strip()
+            steps.append((accumulated, index == len(words) - 1))
+        return steps
+
     async def transcribe_stream(
         self,
         audio: bytes,
         config: ProviderConfig,
     ) -> AsyncIterator[StreamPartial]:
         latency_ms = float(config.extra.get("latency_ms", 50))
-        chunk_delay = latency_ms / 5.0
         text = self._maybe_mutate(self._get_reference_text(config), config)
-        words = text.split()
+        steps = self._stream_steps(text, config)
+        chunk_delay = latency_ms / 5.0
+        scripted = isinstance(config.extra.get("interim_script"), list)
         start = time.perf_counter()
 
-        accumulated = ""
-        for i, word in enumerate(words):
+        for partial_text, is_final in steps:
             await asyncio.sleep(chunk_delay / 1000.0)
-            accumulated = f"{accumulated} {word}".strip()
             elapsed_ms = (time.perf_counter() - start) * 1000
-            is_final = i == len(words) - 1
+            confidence = 0.95 if scripted else 0.9 + random.random() * 0.1
             yield StreamPartial(
-                text=accumulated,
+                text=partial_text,
                 is_final=is_final,
                 timestamp_ms=elapsed_ms,
-                confidence=0.9 + random.random() * 0.1,
+                confidence=confidence,
             )
 
         # Ensure we processed audio duration context

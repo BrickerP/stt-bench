@@ -135,6 +135,7 @@ class BenchmarkRunner:
                         audio_duration_s=result.audio_duration_s,
                         cost_usd=result.cost_usd,
                         confidence_mean=result.confidence.mean if result.confidence else None,
+                        interim_hypotheses=result.interim_hypotheses,
                     )
                     await self.store.save_sample_result(job.run_id, sample.id, sm, result)
                     sample_metrics.append(sm)
@@ -161,6 +162,8 @@ class BenchmarkRunner:
                 total_audio_duration_s=total_audio_s,
                 chrf_values=[m.chrf for m in sample_metrics],
                 punctuation_f1_values=[m.punctuation_f1 for m in sample_metrics],
+                partial_revision_rates=[m.partial_revision_rate for m in sample_metrics],
+                word_churn_values=[m.word_churn for m in sample_metrics],
             )
             agg = AggregateMetrics(**agg_dict)
 

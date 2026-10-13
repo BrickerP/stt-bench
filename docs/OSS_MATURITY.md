@@ -28,6 +28,7 @@ Execution gate only. Architecture/API details live in [DESIGN.md](../DESIGN.md),
 
 - 2026-07-09: Maturity program started; package rename decision recorded; phases below executed in-repo.
 - 2026-10-13: Custom dataset manifest guide landed ([custom-datasets.md](./custom-datasets.md), `examples/custom-dataset/`). Closes the roadmap item tracked here as issue #4.
+- 2026-10-13: Streaming partial revision rate landed (`stt_bench/metrics/revision.py`, mock `interim_script`, report column). Closes the roadmap item tracked here as issue #5.
 
 ## 3. Phases + Exit Criteria
 

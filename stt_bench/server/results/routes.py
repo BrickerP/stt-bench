@@ -54,6 +54,7 @@ async def compute_metrics(body: dict):
         total_ms=timings.get("total_ms", 0),
         audio_duration_s=timings.get("audio_duration_s", 1.0),
         cost_usd=body.get("cost_usd"),
+        interim_hypotheses=body.get("interim_hypotheses"),
     )
     return {
         "wer": sm.wer,
@@ -61,6 +62,9 @@ async def compute_metrics(body: dict):
         "chrf": sm.chrf,
         "punctuation_f1": sm.punctuation_f1,
         "rtf": sm.rtf,
+        "partial_revision_rate": sm.partial_revision_rate,
+        "revised_word_count": sm.revised_word_count,
+        "word_churn": sm.word_churn,
     }
 
 

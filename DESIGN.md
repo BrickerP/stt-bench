@@ -790,6 +790,7 @@ class TranscriptionResult(BaseModel):
     word_timestamps: list[dict] | None = None
     cache_hit: bool = False
     created_at: datetime
+    interim_hypotheses: list[list[str]] | None = None  # streaming segments; null for batch
 ```
 
 ### BenchmarkRun
@@ -925,7 +926,7 @@ Weights are renormalized if a component is unavailable (e.g. TTFT for batch-only
 
 - **chrF:** `sacrebleu.metrics.CHRF` character n-gram F-score (order 6)
 - **Punctuation F1:** Set F1 on punctuation characters extracted from ref/hyp
-- **Partial revision rate:** `(# partial changes) / (# partial events)` for streaming
+- **Partial revision rate:** fraction of normalized interim updates whose previous words are not a prefix of the next hypothesis. `null` when interims were not captured or no update exists (not zero). Word churn is revised words (substitutions + deletions) divided by normalized final length. See `stt-bench math`.
 - **Re-run consistency:** WER between two transcribes of same sample with `force=true`; lower is better
 
 ---

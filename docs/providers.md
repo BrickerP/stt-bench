@@ -30,6 +30,14 @@ Live smoke tests belong in docs or a manual `workflow_dispatch` job.
 
 See `stt_bench/providers/assemblyai.py` and `tests/test_assemblyai_contract.py`.
 
+## Mock interim script
+
+The mock provider grows the reference one word at a time unless `ProviderConfig.extra["interim_script"]` is a list of strings. Those strings are emitted as non-final partials, in order, and then the final transcript is emitted. The script is deterministic (fixed confidence, no network) so partial revision rate can be scored in CI.
+
+```python
+extra = {"interim_script": ["the cat sat", "the dog sat"], "latency_ms": 0, "reference_text": "the dog sat"}
+```
+
 ## Manual smoke (local only)
 
 ```bash

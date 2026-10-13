@@ -28,3 +28,6 @@ def test_render_markdown_report_with_run():
     assert "mock" in text
     assert "5.0%" in text
     assert "71.2" in text
+    assert "Revision" in text
+    # No revision aggregate on this batch-shaped run: not applicable, not zero.
+    assert "| 5.0% | 80.0 | — | — | 71.2 | $0.0000 |" in text
