@@ -46,7 +46,7 @@ curl -s http://127.0.0.1:8766/healthz
 curl -s http://127.0.0.1:8766/version
 ```
 
-Details: [docs/service.md](docs/service.md)
+Volume, env vars, and API keys: [docs/service.md](docs/service.md)
 
 ## With real providers
 

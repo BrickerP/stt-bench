@@ -27,6 +27,7 @@ Execution gate only. Architecture/API details live in [DESIGN.md](../DESIGN.md),
 ### Delta log
 
 - 2026-07-09: Maturity program started; package rename decision recorded; phases below executed in-repo.
+- 2026-10-13: Compose volume and env self-host docs landed ([service.md](./service.md): named volume `stt_bench_data`, env table, key injection). Closes the roadmap item tracked here as issue #1.
 - 2026-10-13: Custom dataset manifest guide landed ([custom-datasets.md](./custom-datasets.md), `examples/custom-dataset/`). Closes the roadmap item tracked here as issue #4.
 - 2026-10-13: Streaming partial revision rate landed (`stt_bench/metrics/revision.py`, mock `interim_script`, report column). Closes the roadmap item tracked here as issue #5.
 
@@ -49,6 +50,7 @@ Execution gate only. Architecture/API details live in [DESIGN.md](../DESIGN.md),
 - [x] `/healthz` `/readyz` `/version`
 - [x] `stt-bench report --format markdown`
 - [x] docs/service.md
+- [x] Compose volume and env self-host docs in docs/service.md (issue #1)
 - Exit: compose up → mock benchmark → markdown report
 
 ### Phase 3 — Ecosystem

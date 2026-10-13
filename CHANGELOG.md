@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- `docs/service.md`: named volume `stt_bench_data`, env vars, and provider-key injection for `docker compose` self-host
 - `confidence.partial_revision_rate` uses the same prefix-stability definition as the benchmark metric. It is null when no interim update was observed, rather than zero.
 
 ### Fixed
