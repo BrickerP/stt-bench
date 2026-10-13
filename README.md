@@ -9,6 +9,10 @@ This is **not** a Whisper demo. It is a reproducible harness for builders choosi
 
 PyPI package name: **`stt-eval-bench`** (the name `stt-bench` was already taken on PyPI). CLI command remains **`stt-bench`**.
 
+![Mock bench demo](docs/assets/demo-mock-bench.gif)
+
+Recorded from a real mock run of the quick-start commands below (no API key). The clip shows the benchmark summary, the markdown report header and metrics table, and the leaderboard. Full text from the same run: [reports/examples/mock-report.md](reports/examples/mock-report.md).
+
 ## Quick start (2 minutes)
 
 ```bash
