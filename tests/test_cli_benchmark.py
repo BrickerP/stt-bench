@@ -34,6 +34,28 @@ def test_validate_provider_credentials_allows_mock():
     _validate_provider_credentials(["mock"], settings)
 
 
+def test_validate_provider_credentials_google_and_azure_missing():
+    settings = Settings(
+        google_application_credentials=None,
+        azure_speech_key=None,
+        azure_speech_region=None,
+    )
+    with pytest.raises(typer.Exit) as exc:
+        _validate_provider_credentials(["google", "azure"], settings)
+    assert exc.value.exit_code == 1
+
+
+def test_validate_provider_credentials_azure_region_not_length_checked(tmp_path):
+    path = tmp_path / "sa.json"
+    path.write_text("{}", encoding="utf-8")
+    settings = Settings(
+        google_application_credentials=str(path),
+        azure_speech_key="a" * 32,
+        azure_speech_region="eastus",
+    )
+    _validate_provider_credentials(["google", "azure"], settings)
+
+
 def test_print_run_summary_failed(capsys):
     _print_run_summary(
         {

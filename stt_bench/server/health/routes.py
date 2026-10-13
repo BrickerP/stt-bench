@@ -33,6 +33,9 @@ async def ready(settings: Settings = Depends(get_app_settings)):
         "openai_key": "configured" if settings.openai_api_key else "missing",
         "deepgram_key": "configured" if settings.deepgram_api_key else "missing",
         "assemblyai_key": "configured" if settings.assemblyai_api_key else "missing",
+        "google_credentials": "configured" if settings.google_application_credentials else "missing",
+        "azure_speech_key": "configured" if settings.azure_speech_key else "missing",
+        "azure_speech_region": "configured" if settings.azure_speech_region else "missing",
         "dataset": "ok" if ds["valid"] else "invalid",
     }
     status = "ready" if ds["valid"] else "degraded"
@@ -55,7 +58,12 @@ async def config(settings: Settings = Depends(get_app_settings)):
         "whisper_model": settings.whisper_model,
         "deepgram_model": settings.deepgram_model,
         "assemblyai_model": settings.assemblyai_model,
+        "google_speech_model": settings.google_speech_model,
+        "azure_speech_model": settings.azure_speech_model,
         "openai_key": "***" if settings.openai_api_key else None,
         "deepgram_key": "***" if settings.deepgram_api_key else None,
         "assemblyai_key": "***" if settings.assemblyai_api_key else None,
+        "google_credentials": "***" if settings.google_application_credentials else None,
+        "azure_speech_key": "***" if settings.azure_speech_key else None,
+        "azure_speech_region": settings.azure_speech_region,
     }
