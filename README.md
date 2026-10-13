@@ -69,7 +69,7 @@ Your own audio and reference transcripts: [docs/custom-datasets.md](docs/custom-
 
 ## Metrics
 
-WER · chrF · punctuation F1 · TTFT · RTF · cost · vibe score — see `stt-bench math`.
+WER · chrF · punctuation F1 · partial revision rate (streaming) · TTFT · RTF · cost · vibe score — see `stt-bench math`.
 
 ## Contributing
 

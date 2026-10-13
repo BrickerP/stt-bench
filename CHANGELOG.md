@@ -6,8 +6,13 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Partial revision rate for streaming providers: fraction of interim updates that rewrite previously emitted words, plus revised-word count and word churn normalized by final length. Batch runs report the metric as not applicable. The mock provider accepts `extra.interim_script` for a deterministic interim sequence.
 - `docs/custom-datasets.md`: manifest fields, path resolution, WER normalization, and the CLI / HTTP calls for a user-supplied dataset
 - `examples/custom-dataset/`: two short WAV clips and a manifest that `stt-bench benchmark run --provider mock` can score without API keys
+
+### Changed
+
+- `confidence.partial_revision_rate` uses the same prefix-stability definition as the benchmark metric. It is null when no interim update was observed, rather than zero.
 
 ### Fixed
 

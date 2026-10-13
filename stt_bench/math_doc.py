@@ -79,7 +79,35 @@ cost_per_minute = sum(cost_usd) / (total_audio_duration_s / 60)
 
 ---
 
-## 6. Vibe Score (composite, 0–100)
+## 6. Partial revision rate (streaming only)
+
+How often an interim hypothesis **rewrites words already emitted**, rather than only appending. Batch providers do not capture interims, so the metric is **not applicable** (`null`), not zero.
+
+Hypotheses are split into segments at each final result. A segment is its non-final partials plus that segment's non-empty final. Empty finals are endpoint markers and are dropped. Pairs never cross a segment boundary.
+
+Each hypothesis is normalized with the WER normalizer (lowercase, expand contractions, strip punctuation, collapse whitespace). An **interim update** is a consecutive pair in a segment. It is a **revision** when the previous word list is not a prefix of the next one.
+
+```
+partial_revision_rate = revising_updates / interim_updates
+revised_word_count    = Σ (substitutions + deletions) over those updates
+word_churn            = revised_word_count / words in the normalized final transcript
+```
+
+Word alignment is the same Levenshtein alignment WER uses. Insertions of new words are not revised words. A word inserted in the middle still counts as a revising update (the old sequence was not a stable prefix) and adds 0 to `revised_word_count` when every previous word survives.
+
+| Case | Result |
+|------|--------|
+| No interims captured (batch) | not applicable |
+| No pair to compare (empty, or a single partial) | not applicable |
+| Identical repeat, or a change of only case/punctuation | update, not a revision |
+| Pure append (`cat` → `cat sat`) | update, not a revision |
+| Empty partial after words (`hello world` → ``) | revision; every previous word is deleted |
+| Leading empty partial (` ` → `hello`) | update, not a revision (nothing was emitted yet) |
+| Normalized final has no words | rate and revised-word count still apply; `word_churn` is not applicable |
+
+---
+
+## 7. Vibe Score (composite, 0–100)
 
 Each component mapped to quality ∈ [0, 1]:
 
@@ -105,7 +133,7 @@ vibe = 100 × Σ (quality_k × weight_k / Σ active_weights)
 
 ---
 
-## 7. No ground truth?
+## 8. No ground truth?
 
 When reference text is missing, WER/chrF/punctuation F1 are **skipped**. The system can still report:
 

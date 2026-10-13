@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from io import BytesIO
 from typing import TYPE_CHECKING
 
+from stt_bench.metrics.revision import compute_partial_revision, group_interim_hypotheses
 from stt_bench.models.config import ProviderCapabilities, ProviderConfig, TransportMode
 from stt_bench.models.transcription import ConfidenceMetrics, Timings, TranscriptionResult
 
@@ -117,19 +118,15 @@ class STTProvider(ABC):
         total_ms = parts[-1].timestamp_ms
         duration_s = estimate_audio_duration_s(audio)
         confidences = [p.confidence for p in parts if p.confidence is not None]
-        revisions = sum(
-            1
-            for i in range(1, len(parts))
-            if parts[i].text != parts[i - 1].text and not parts[i].is_final
-        )
-        partial_count = sum(1 for p in parts if not p.is_final)
+        interim_hypotheses = group_interim_hypotheses([(p.text, p.is_final) for p in parts])
+        revision = compute_partial_revision(interim_hypotheses, final_text=text)
 
         confidence = None
         if confidences:
             confidence = ConfidenceMetrics(
                 mean=sum(confidences) / len(confidences),
                 min=min(confidences),
-                partial_revision_rate=revisions / partial_count if partial_count else 0.0,
+                partial_revision_rate=revision.partial_revision_rate,
             )
 
         return TranscriptionResult(
@@ -145,6 +142,7 @@ class STTProvider(ABC):
             ),
             cost_usd=self.estimate_cost_usd(duration_s, config),
             confidence=confidence,
+            interim_hypotheses=interim_hypotheses,
         )
 
     @staticmethod

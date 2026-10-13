@@ -31,10 +31,14 @@ def aggregate_latencies(
     total_audio_duration_s: float,
     chrf_values: list[float | None] | None = None,
     punctuation_f1_values: list[float | None] | None = None,
+    partial_revision_rates: list[float | None] | None = None,
+    word_churn_values: list[float | None] | None = None,
 ) -> dict:
     ttft_clean = [v for v in ttft_values if v is not None]
     chrf_clean = [v for v in (chrf_values or []) if v is not None]
     punct_clean = [v for v in (punctuation_f1_values or []) if v is not None]
+    revision_clean = [v for v in (partial_revision_rates or []) if v is not None]
+    churn_clean = [v for v in (word_churn_values or []) if v is not None]
     return {
         "wer_mean": statistics.mean(wer_values) if wer_values else 0.0,
         "wer_median": statistics.median(wer_values) if wer_values else 0.0,
@@ -50,4 +54,6 @@ def aggregate_latencies(
             (sum(cost_values) / (total_audio_duration_s / 60)) if total_audio_duration_s > 0 else 0.0
         ),
         "sample_count": len(wer_values),
+        "partial_revision_rate_mean": statistics.mean(revision_clean) if revision_clean else None,
+        "word_churn_mean": statistics.mean(churn_clean) if churn_clean else None,
     }

@@ -37,6 +37,10 @@ class TranscriptionResult(BaseModel):
     cache_hit: bool = False
     created_at: datetime = Field(default_factory=datetime.utcnow)
     raw_provider_response: dict | None = None
+    # Per-segment streaming hypotheses. None when interims were not captured
+    # (batch providers). Each inner list is one utterance: non-final partials
+    # in order, then that segment's non-empty final. See metrics/revision.py.
+    interim_hypotheses: list[list[str]] | None = None
 
 
 class LeaderboardEntry(BaseModel):

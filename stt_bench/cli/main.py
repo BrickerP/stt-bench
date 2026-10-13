@@ -206,6 +206,7 @@ async def _transcribe_sample_metrics(provider: str, audio_path: Path, reference:
         audio_duration_s=result.audio_duration_s,
         cost_usd=cost,
         confidence_mean=result.confidence.mean if result.confidence else None,
+        interim_hypotheses=result.interim_hypotheses,
     )
     agg = AggregateMetrics(
         wer_mean=metrics.wer,
@@ -750,7 +751,8 @@ def _print_run_summary(run: dict):
         f"({run['config']['transport_mode']})\n"
         f"Status: {status} | Samples: {run['sample_count']} | "
         f"Vibe: {vibe_str} | WER: {_fmt_pct(wer)} | "
-        f"chrF: {_fmt_chrf(chrf)} | Punct F1: {_fmt_pct(punct)}"
+        f"chrF: {_fmt_chrf(chrf)} | Punct F1: {_fmt_pct(punct)} | "
+        f"Revision: {_fmt_pct(agg.get('partial_revision_rate_mean'))}"
     )
     if status == "failed" and run.get("error"):
         err_console.print(f"[red]Error:[/red] {run['error']}")
