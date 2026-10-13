@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- README mock-bench demo (`docs/assets/demo-mock-bench.gif`): a terminal recording of `benchmark run --provider mock`, a markdown report snippet, and `results leaderboard`. Regenerate with `python docs/assets/render_demo_gif.py` (see `docs/assets/README.md`).
 - Google Cloud Speech-to-Text and Azure Speech batch adapters (`google`, `azure`). CI runs contract tests only; live smoke is manual (`docs/providers.md`).
 - Pull request mock benchmark publishes `report.md` on the job summary and as the `stt-bench-report` artifact, and updates one sticky pull request comment. Fork pull requests skip the comment. Set the repository variable `STT_BENCH_PR_COMMENT` to `false` to opt out.
 - Partial revision rate for streaming providers: fraction of interim updates that rewrite previously emitted words, plus revised-word count and word churn normalized by final length. Batch runs report the metric as not applicable. The mock provider accepts `extra.interim_script` for a deterministic interim sequence.
@@ -14,6 +15,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- `reports/examples/mock-report.md` refreshed from the mock run in the README demo, including the revision and churn columns
 - `docs/service.md`: named volume `stt_bench_data`, env vars, and provider-key injection for `docker compose` self-host
 - `confidence.partial_revision_rate` uses the same prefix-stability definition as the benchmark metric. It is null when no interim update was observed, rather than zero.
 

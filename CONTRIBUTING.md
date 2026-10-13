@@ -33,3 +33,7 @@ ruff check stt_bench tests
 - Python 3.11+
 - Ruff for lint
 - Prefer extending existing modules over new abstraction layers
+
+## README demo
+
+`python docs/assets/render_demo_gif.py` regenerates `docs/assets/demo-mock-bench.gif`. See [docs/assets/README.md](docs/assets/README.md).

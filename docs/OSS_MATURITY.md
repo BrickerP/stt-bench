@@ -32,6 +32,7 @@ Execution gate only. Architecture/API details live in [DESIGN.md](../DESIGN.md),
 - 2026-10-13: Streaming partial revision rate landed (`stt_bench/metrics/revision.py`, mock `interim_script`, report column). Closes the roadmap item tracked here as issue #5.
 - 2026-10-13: PR report comment bot landed (job summary, `report.md` artifact, one sticky comment on same-repo pull requests; fork pull requests skip the comment). Closes the roadmap item tracked here as issue #6.
 - 2026-10-13: Google Cloud Speech-to-Text and Azure Speech batch adapters landed with contract tests (no live keys in CI). Closes the roadmap item tracked here as issue #3.
+- 2026-10-13: README mock-bench demo GIF landed (`docs/assets/demo-mock-bench.gif`, recorded from a real `stt-bench` mock run). Closes the roadmap item tracked here as issue #8.
 
 ## 3. Phases + Exit Criteria
 
@@ -64,6 +65,7 @@ Execution gate only. Architecture/API details live in [DESIGN.md](../DESIGN.md),
 
 ### Phase 4 — Honest apply packet
 - [x] README first screen = evaluation toolkit
+- [x] Visual first-screen demo of mock bench + report (issue #8)
 - [x] examples/
 - [x] Application Packet short + long
 - Exit: hard DoD checklist green; push to origin
