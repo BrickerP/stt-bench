@@ -207,14 +207,23 @@ def register_provider(cls: type[STTProvider]) -> type[STTProvider]:
 
 
 def _ensure_providers_registered() -> None:
-    if len(_REGISTRY) >= 4:
+    if len(_REGISTRY) >= 6:
         return
     from stt_bench.providers.assemblyai import AssemblyAIProvider
+    from stt_bench.providers.azure import AzureProvider
     from stt_bench.providers.deepgram import DeepgramProvider
+    from stt_bench.providers.google import GoogleProvider
     from stt_bench.providers.mock import MockProvider
     from stt_bench.providers.whisper import WhisperProvider
 
-    for cls in (MockProvider, WhisperProvider, DeepgramProvider, AssemblyAIProvider):
+    for cls in (
+        MockProvider,
+        WhisperProvider,
+        DeepgramProvider,
+        AssemblyAIProvider,
+        GoogleProvider,
+        AzureProvider,
+    ):
         register_provider(cls)
 
 

@@ -35,7 +35,7 @@ pip install -e ".[dev]"
 |---|---|
 | **CLI** | `compare`, `listen`, `benchmark`, `report`, `results` |
 | **Local service** | `stt-bench serve` or `docker compose up` — FastAPI + SQLite |
-| **Providers** | `mock`, `whisper`, `deepgram`, `assemblyai` (pluggable) |
+| **Providers** | `mock`, `whisper`, `deepgram`, `assemblyai`, `google`, `azure` (pluggable) |
 | **Reports** | Markdown suitable for PR comments |
 
 ## Self-host in 60s
@@ -51,7 +51,7 @@ Volume, env vars, and API keys: [docs/service.md](docs/service.md)
 ## With real providers
 
 ```bash
-cp .env.example .env   # OPENAI_API_KEY / DEEPGRAM_API_KEY / ASSEMBLYAI_API_KEY
+cp .env.example .env   # provider keys; see .env.example (no secrets in CI)
 stt-bench listen 1089-134686-0000_noisy
 stt-bench compare --all
 ```

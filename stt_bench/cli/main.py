@@ -534,6 +534,10 @@ def _default_model(provider: str, settings) -> str:
         return settings.deepgram_model
     if provider == "assemblyai":
         return settings.assemblyai_model
+    if provider == "google":
+        return settings.google_speech_model
+    if provider == "azure":
+        return settings.azure_speech_model
     return "mock-v1"
 
 
@@ -564,6 +568,28 @@ def _validate_provider_credentials(providers: list[str], settings) -> None:
         elif prov == "assemblyai":
             key = settings.assemblyai_api_key
             env_name = "ASSEMBLYAI_API_KEY"
+        elif prov == "google":
+            from stt_bench.providers.base import ProviderError
+            from stt_bench.providers.google import credentials_path
+
+            try:
+                credentials_path(settings)
+            except ProviderError as exc:
+                errors.append(f"google: {exc.message}")
+            continue
+        elif prov == "azure":
+            key = settings.azure_speech_key
+            region = (settings.azure_speech_region or "").strip()
+            if not key or not key.strip():
+                errors.append("azure: AZURE_SPEECH_KEY is not set — add it to stt-bench/.env")
+            elif _looks_like_placeholder_api_key(key):
+                errors.append(
+                    "azure: AZURE_SPEECH_KEY looks like a placeholder — "
+                    "set a real key in stt-bench/.env"
+                )
+            if not region or region in _PLACEHOLDER_API_KEYS:
+                errors.append("azure: AZURE_SPEECH_REGION is not set — add it to stt-bench/.env")
+            continue
         else:
             continue
 

@@ -17,6 +17,9 @@ class Settings(BaseSettings):
     openai_api_key: str | None = None
     deepgram_api_key: str | None = None
     assemblyai_api_key: str | None = None
+    google_application_credentials: str | None = None
+    azure_speech_key: str | None = None
+    azure_speech_region: str | None = None
 
     stt_bench_host: str = "127.0.0.1"
     stt_bench_port: int = 8766
@@ -30,6 +33,8 @@ class Settings(BaseSettings):
     whisper_model: str = "whisper-1"
     deepgram_model: str = "nova-2"
     assemblyai_model: str = "best"
+    google_speech_model: str = "latest_long"
+    azure_speech_model: str = "fast"
     stt_bench_log_level: str = "INFO"
     stt_bench_max_concurrent_samples: int = 4
 

@@ -56,14 +56,17 @@ Compose sets these on the service. The Dockerfile `ENV` lines use the same path 
 | `OPENAI_API_KEY` | empty if unset | Whisper. Injected from the shell or a `.env` file next to the compose file. |
 | `DEEPGRAM_API_KEY` | empty if unset | Deepgram. Same injection. |
 | `ASSEMBLYAI_API_KEY` | empty if unset | AssemblyAI. Same injection. |
+| `GOOGLE_APPLICATION_CREDENTIALS` | empty if unset | Google Speech service-account JSON path. The file must exist at that path inside the container. |
+| `AZURE_SPEECH_KEY` | empty if unset | Azure Speech key. Same injection. |
+| `AZURE_SPEECH_REGION` | empty if unset | Azure Speech region, for example `eastus`. |
 
 Changing `STT_BENCH_HOST` or `STT_BENCH_PORT` in the environment block does not move the bind. The Dockerfile `CMD` passes `--host` and `--port` to `stt-bench serve`, and those flags are what uvicorn uses. To listen elsewhere, change the command and the `ports:` mapping together.
 
-`.env.example` also lists `WHISPER_RPM`, `DEEPGRAM_RPM`, `WHISPER_MODEL`, `DEEPGRAM_MODEL`, `ASSEMBLYAI_MODEL`, and `STT_BENCH_LOG_LEVEL`. Those are real settings for a host `stt-bench` process. This compose file does not forward them. A value in `.env` reaches the container only when the compose file interpolates it (the three API keys) or you add an `environment:` entry.
+`.env.example` also lists `WHISPER_RPM`, `DEEPGRAM_RPM`, `WHISPER_MODEL`, `DEEPGRAM_MODEL`, `ASSEMBLYAI_MODEL`, `GOOGLE_SPEECH_MODEL`, `AZURE_SPEECH_MODEL`, and `STT_BENCH_LOG_LEVEL`. Those are real settings for a host `stt-bench` process. This compose file does not forward them. A value in `.env` reaches the container only when the compose file interpolates it (the provider credentials below) or you add an `environment:` entry.
 
 ## Provider API keys
 
-Keys are read from the process environment (`OPENAI_API_KEY`, `DEEPGRAM_API_KEY`, `ASSEMBLYAI_API_KEY`). The service does not write them to SQLite. The Dockerfile does not copy a `.env` into the image.
+Keys are read from the process environment (`OPENAI_API_KEY`, `DEEPGRAM_API_KEY`, `ASSEMBLYAI_API_KEY`, `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`, `GOOGLE_APPLICATION_CREDENTIALS`). The service does not write them to SQLite. The Dockerfile does not copy a `.env` into the image.
 
 Compose interpolates them with an empty default:
 
@@ -71,6 +74,9 @@ Compose interpolates them with an empty default:
 OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
 DEEPGRAM_API_KEY: "${DEEPGRAM_API_KEY:-}"
 ASSEMBLYAI_API_KEY: "${ASSEMBLYAI_API_KEY:-}"
+GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS:-}"
+AZURE_SPEECH_KEY: "${AZURE_SPEECH_KEY:-}"
+AZURE_SPEECH_REGION: "${AZURE_SPEECH_REGION:-}"
 ```
 
 Either of these supplies the values. Compose reads `.env` from the project directory (next to `docker-compose.yml`) for interpolation. A shell export of the same name wins over `.env`.
@@ -84,7 +90,21 @@ docker compose up --build -d
 export OPENAI_API_KEY=...
 export DEEPGRAM_API_KEY=...
 export ASSEMBLYAI_API_KEY=...
+export AZURE_SPEECH_KEY=...
+export AZURE_SPEECH_REGION=eastus
 docker compose up --build -d
+```
+
+`GOOGLE_APPLICATION_CREDENTIALS` is a filesystem path, not a key string. Compose will pass the host path through, which is wrong inside the container unless you bind-mount the JSON and point the variable at the container path. Add the bind next to `stt_bench_data` (do not drop the named volume). Do not commit the JSON.
+
+```yaml
+services:
+  stt-bench:
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /secrets/gcp-sa.json
+    volumes:
+      - stt_bench_data:/data
+      - /absolute/path/on/the/host/sa.json:/secrets/gcp-sa.json:ro
 ```
 
 Mock runs do not need keys. `GET /readyz` reports each key as `configured` or `missing`. Readiness is `ready` when the dataset validates and `degraded` when it does not. A missing key does not by itself mark the process degraded.

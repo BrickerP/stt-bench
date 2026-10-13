@@ -15,3 +15,16 @@ assemblyai:
 
 mock:
   default: 0.0
+
+google:
+  # Placeholder USD per minute. Cloud Speech-to-Text standard recognition has
+  # historically been about $0.016/min. Vendors change prices.
+  latest_long: 0.016
+  latest_short: 0.016
+  default: 0.016
+
+azure:
+  # Placeholder USD per minute. Azure Speech standard is often near $1 per
+  # audio hour (~$0.0167/min). Vendors change prices.
+  fast: 0.0167
+  default: 0.0167
