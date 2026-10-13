@@ -65,6 +65,8 @@ stt-bench samples
 stt-bench dataset validate
 ```
 
+Your own audio and reference transcripts: [docs/custom-datasets.md](docs/custom-datasets.md). The example under `examples/custom-dataset/` runs with `--provider mock` and no API key.
+
 ## Metrics
 
 WER · chrF · punctuation F1 · TTFT · RTF · cost · vibe score — see `stt-bench math`.

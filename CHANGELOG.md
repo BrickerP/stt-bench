@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- `docs/custom-datasets.md`: manifest fields, path resolution, WER normalization, and the CLI / HTTP calls for a user-supplied dataset
+- `examples/custom-dataset/`: two short WAV clips and a manifest that `stt-bench benchmark run --provider mock` can score without API keys
+
+### Fixed
+
+- A manifest whose top-level JSON value is not an object raises `ValueError` (`Manifest must be a JSON object, got …`) instead of `AttributeError`
+- Manifest files are decoded as UTF-8
+
 ## [0.1.1] — 2026-07-09
 
 ### Added

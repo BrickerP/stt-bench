@@ -1,0 +1,24 @@
+{
+  "dataset_id": "default",
+  "name": "Custom dataset example",
+  "description": "Two 200 ms synthetic clips for docs/custom-datasets.md. The mock provider does not decode the audio.",
+  "samples": [
+    {
+      "id": "tone",
+      "audio_path": "clips/tone.wav",
+      "reference_text": "a short tone",
+      "condition": "clean",
+      "source": "synthetic",
+      "metadata": {
+        "hz": 440
+      }
+    },
+    {
+      "id": "silence",
+      "audio_path": "clips/silence.wav",
+      "reference_text": "a short silence",
+      "condition": "noisy",
+      "source": "synthetic"
+    }
+  ]
+}
