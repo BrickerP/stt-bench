@@ -20,8 +20,14 @@ def load_manifest(settings: Settings | None = None, dataset_id: str = "default")
     if not path.exists():
         raise FileNotFoundError(f"Manifest not found: {path}")
 
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         data = json.load(f)
+
+    if not isinstance(data, dict):
+        # ValueError, not TypeError: BenchmarkRunner maps ValueError to DATASET_NOT_FOUND.
+        raise ValueError(  # noqa: TRY004
+            f"Manifest must be a JSON object, got {type(data).__name__}"
+        )
 
     if data.get("dataset_id") != dataset_id:
         raise ValueError(f"Manifest dataset_id '{data.get('dataset_id')}' != '{dataset_id}'")

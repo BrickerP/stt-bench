@@ -2,7 +2,7 @@
 
 > From personal benchmark tool to maintainer-grade OSS application package
 
-Execution gate only. Architecture/API details live in [DESIGN.md](../DESIGN.md), [service.md](./service.md), and [providers.md](./providers.md).
+Execution gate only. Architecture/API details live in [DESIGN.md](../DESIGN.md), [service.md](./service.md), [providers.md](./providers.md), and [custom-datasets.md](./custom-datasets.md).
 
 ## 1. Eligibility Scorecard
 
@@ -27,6 +27,7 @@ Execution gate only. Architecture/API details live in [DESIGN.md](../DESIGN.md),
 ### Delta log
 
 - 2026-07-09: Maturity program started; package rename decision recorded; phases below executed in-repo.
+- 2026-10-13: Custom dataset manifest guide landed ([custom-datasets.md](./custom-datasets.md), `examples/custom-dataset/`). Closes the roadmap item tracked here as issue #4.
 
 ## 3. Phases + Exit Criteria
 
