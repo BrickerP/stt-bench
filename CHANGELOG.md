@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Pull request mock benchmark publishes `report.md` on the job summary and as the `stt-bench-report` artifact, and updates one sticky pull request comment. Fork pull requests skip the comment. Set the repository variable `STT_BENCH_PR_COMMENT` to `false` to opt out.
 - Partial revision rate for streaming providers: fraction of interim updates that rewrite previously emitted words, plus revised-word count and word churn normalized by final length. Batch runs report the metric as not applicable. The mock provider accepts `extra.interim_script` for a deterministic interim sequence.
 - `docs/custom-datasets.md`: manifest fields, path resolution, WER normalization, and the CLI / HTTP calls for a user-supplied dataset
 - `examples/custom-dataset/`: two short WAV clips and a manifest that `stt-bench benchmark run --provider mock` can score without API keys
