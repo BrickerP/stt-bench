@@ -33,6 +33,7 @@ Execution gate only. Architecture/API details live in [DESIGN.md](../DESIGN.md),
 - 2026-10-13: PR report comment bot landed (job summary, `report.md` artifact, one sticky comment on same-repo pull requests; fork pull requests skip the comment). Closes the roadmap item tracked here as issue #6.
 - 2026-10-13: Google Cloud Speech-to-Text and Azure Speech batch adapters landed with contract tests (no live keys in CI). Closes the roadmap item tracked here as issue #3.
 - 2026-10-13: README mock-bench demo GIF landed (`docs/assets/demo-mock-bench.gif`, recorded from a real `stt-bench` mock run). Closes the roadmap item tracked here as issue #8.
+- 2026-10-14: Trusted Publishing confirmed live for `stt-eval-bench`: PyPI `0.1.1` published 2026-07-09 via Trusted Publishing with provenance attestations (wheel + sdist). Closes the roadmap item tracked here as issue #2.
 
 ## 3. Phases + Exit Criteria
 
@@ -73,7 +74,7 @@ Execution gate only. Architecture/API details live in [DESIGN.md](../DESIGN.md),
 ## 4. Hard DoD Checklist
 
 - [x] Install path works via source / GitHub Release wheel
-- [x] `pip install stt-eval-bench` from PyPI (Trusted Publisher pending → publish via `v0.1.1`)
+- [x] `pip install stt-eval-bench` from PyPI (Trusted Publishing live; `v0.1.1` published 2026-07-09 with provenance attestations for wheel + sdist)
 - [x] `Dockerfile` + `docker-compose.yml` landed; local `stt-bench serve` mock path verified (`/healthz`, report). Compose not executed on agent host (no docker binary).
 - [x] `stt-bench report --format markdown`
 - [x] CI workflows present: pytest, ruff, package build (mock-only)
